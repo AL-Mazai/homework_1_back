@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: homework_1_back
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useSSL=false
+    username: root
+    password: zzwzzw
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 8888
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # ??
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: delFlag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: auto
