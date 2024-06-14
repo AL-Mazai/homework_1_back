@@ -2,7 +2,8 @@ spring:
   application:
     name: homework_1_back
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useSSL=false
+#    url: jdbc:mysql://localhost:3306/ai_chat?useSSL=false
+    url: jdbc:mysql://116.205.143.194:3306/ai_chat?useSSL=false
     username: root
     password: zzwzzw
     driver-class-name: com.mysql.cj.jdbc.Driver
