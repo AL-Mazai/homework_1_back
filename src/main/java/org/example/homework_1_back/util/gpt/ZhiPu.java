@@ -38,7 +38,7 @@ public class ZhiPu implements GPT {
         ObjectMapper mapper = new ObjectMapper();
         ModelApiResponse invokeModelApiResp = client.invokeModelApi(chatCompletionRequest);
         ModelData modelData = invokeModelApiResp.getData();
-        String output = modelData.getChoices().getFirst().getMessage().getContent().toString();
+        String output = modelData.getChoices().get(0).getMessage().getContent().toString();
         return output;
     }
 }

@@ -36,7 +36,7 @@ public class TongYi implements GPT {
     }
     public static void tryIt(){
         try {
-            GPT gpt=new TongYi();
+            TongYi gpt=new TongYi();
             gpt.streamOutput("test");
 
         } catch (ApiException e) {
