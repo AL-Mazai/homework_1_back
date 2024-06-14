@@ -8,6 +8,7 @@ import com.alibaba.dashscope.exception.ApiException;
 import com.alibaba.dashscope.exception.InputRequiredException;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.alibaba.dashscope.utils.Constants;
+import com.alibaba.dashscope.utils.JsonUtils;
 import io.reactivex.Flowable;
 
 import java.util.function.Consumer;
@@ -16,6 +17,7 @@ public class TongYi implements GPT {
     {
         Constants.apiKey = "sk-c614d7fb789f4550abdbf4e3e9837831";
     }
+
 
     public void streamOutput(String content, Consumer<String> messageCallback) {
         Conversation conversation = new Conversation();
@@ -60,8 +62,21 @@ public class TongYi implements GPT {
 
     }
 
-    @Override
-    public String gpt(String content) {
-        return null;
+    public String  gpt(String content){
+        Conversation conversation = new Conversation();
+        ConversationParam param = ConversationParam
+                .builder()
+                .model(Conversation.Models.QWEN_TURBO)
+                .prompt(content)
+                .build();
+        ConversationResult result = null;
+        try {
+            result = conversation.call(param);
+        } catch (NoApiKeyException e) {
+            throw new RuntimeException(e);
+        } catch (InputRequiredException e) {
+            throw new RuntimeException(e);
+        }
+        return JsonUtils.toJson(result.getOutput().getText());
     }
 }

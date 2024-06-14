@@ -9,6 +9,11 @@ class TongYiTest {
     @Test
     public void tryIt() {
         TongYi tongyi = new TongYi();
-        tongyi.tryIt();
+        tongyi.gpt("教我如何制作糖醋排骨");
+    }
+    @Test
+    public void gpt() {
+        TongYi tongyi = new TongYi();
+        System.out.println(tongyi.gpt("教我如何制作糖醋排骨"));
     }
 }
