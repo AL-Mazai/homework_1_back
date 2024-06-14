@@ -8,7 +8,7 @@ class TongYiTest {
 
     @Test
     public void tryIt() {
-        GPT ZhiPu=new ZhiPu();
-        System.out.println(ZhiPu.gpt("如何制作糖醋排骨"));
+        TongYi tongyi = new TongYi();
+        tongyi.tryIt();
     }
 }
