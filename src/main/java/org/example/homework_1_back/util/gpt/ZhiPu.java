@@ -1,4 +1,4 @@
-package org.example.homework_1_back.util;
+package org.example.homework_1_back.util.gpt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhipu.oapi.ClientV4;
@@ -10,16 +10,19 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 //f779df436dfc7fe987118c1112e12152.bKpyMkTCSJAsT3m3
-public class GPTUtil {
-    {
-        com.alibaba.dashscope.utils.Constants.apiKey="sk-c614d7fb789f4550abdbf4e3e9837831";
-    }
+public class ZhiPu implements GPT {
     public static ClientV4 client = new ClientV4.Builder("f779df436dfc7fe987118c1112e12152.bKpyMkTCSJAsT3m3")
             .enableTokenCache()
             .networkConfig(600, 600, 600, 600, TimeUnit.SECONDS)
             .build();
 
-    public static String gpt(String content) {
+
+    @Override
+    public void streamOutput(String content) {
+
+    }
+
+    public  String gpt(String content) {
         List<ChatMessage> messages = new ArrayList<>();
         ChatMessage chatMessage = new ChatMessage(ChatMessageRole.USER.value(), content);
         messages.add(chatMessage);
