@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT WebSocket Chat</title>
+    <style>
+        #response {
+            height: 80vh;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>GPT WebSocket Chat</h1>
+
+<div>
+    <input type="text" id="user-input" placeholder="请输入问题...">
+    <button onclick="sendMessage()">发送</button>
+</div>
+
+<div id="response"></div>
+
+<script>
+    let socket;
+    let lastResponse = "";
+
+    function connectWebSocket() {
+        socket = new WebSocket('ws://localhost:8888/gpt-stream'); // 根据实际情况替换或保持为localhost:8888
+
+        socket.onopen = function () {
+            console.log('WebSocket 连接已建立');
+        };
+
+        socket.onmessage = function (event) {
+            // 更新lastResponse并设置到DOM，而不是追加
+            lastResponse = event.data;
+            var responseElement = document.getElementById('response');
+            responseElement.innerHTML = `<p>${lastResponse}</p>`;
+            responseElement.scrollTop = responseElement.scrollHeight; // 自动滚动到底部
+        };
+
+        socket.onerror = function (error) {
+            console.error('WebSocket 错误: ' + error);
+        };
+
+        socket.onclose = function () {
+            console.log('WebSocket 连接已关闭');
+        };
+    }
+
+    function sendMessage() {
+        var userInput = document.getElementById('user-input').value;
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(userInput); // 直接发送用户输入作为消息
+            document.getElementById('user-input').value = ''; // 清空输入框
+        } else {
+            console.error('WebSocket 连接未建立');
+        }
+    }
+
+    // 页面加载时尝试建立WebSocket连接
+    window.onload = connectWebSocket;
+</script>
+
+</body>
+</html>

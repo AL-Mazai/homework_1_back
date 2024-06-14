@@ -17,10 +17,6 @@ public class ZhiPu implements GPT {
             .build();
 
 
-    @Override
-    public void streamOutput(String content) {
-
-    }
 
     public  String gpt(String content) {
         List<ChatMessage> messages = new ArrayList<>();

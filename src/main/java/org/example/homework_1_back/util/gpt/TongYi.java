@@ -10,15 +10,17 @@ import com.alibaba.dashscope.exception.NoApiKeyException;
 import com.alibaba.dashscope.utils.Constants;
 import com.alibaba.dashscope.utils.JsonUtils;
 import io.reactivex.Flowable;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.util.function.Consumer;
-
+@Component
 public class TongYi implements GPT {
     {
         Constants.apiKey = "sk-c614d7fb789f4550abdbf4e3e9837831";
     }
-
-
     public void streamOutput(String content, Consumer<String> messageCallback) {
         Conversation conversation = new Conversation();
         String prompt = content; // 使用传入的content作为prompt
@@ -57,9 +59,23 @@ public class TongYi implements GPT {
         System.exit(0);
     }
 
-    @Override
-    public void streamOutput(String content) {
-
+    public void streamOutput2(String content, Consumer<String> messageCallback) {
+        // 修改此方法以接受Consumer<String>，用于消息处理
+        Conversation conversation = new Conversation();
+        String prompt = content;
+        ConversationParam param = ConversationParam.builder()
+                .model(Conversation.Models.QWEN_TURBO)
+                .prompt(prompt)
+                .build();
+        try {
+            Flowable<ConversationResult> result = conversation.streamCall(param);
+            result.blockingForEach(msg -> {
+                GenerationOutput generationOutput = msg.getOutput();
+                messageCallback.accept(generationOutput.getText());
+            });
+        } catch (ApiException | InputRequiredException | NoApiKeyException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public String  gpt(String content){
