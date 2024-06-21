@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.homework_1_back.dao.ChatRecordDao">
+
+    <resultMap type="org.example.homework_1_back.entity.ChatRecord" id="ChatRecordMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="chatContent" column="chat_content" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="delTag" column="del_tag" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ChatRecordMap">
+        select
+idchat_contentcreated_timedel_taguser_id
+        from chat_record
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ChatRecordMap">
+        select
+idchat_contentcreated_timedel_taguser_id
+        from chat_record
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="chatContent != null and chatContent != ''">
+                and chat_content = #{chatContent}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="delTag != null">
+                and del_tag = #{delTag}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from chat_record
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="chatContent != null and chatContent != ''">
+                and chat_content = #{chatContent}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="delTag != null">
+                and del_tag = #{delTag}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into chat_record(chat_contentcreated_timedel_taguser_id)
+        values (#{chatContent}#{createdTime}#{delTag}#{userId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into chat_record(chat_contentcreated_timedel_taguser_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.chatContent}#{entity.createdTime}#{entity.delTag}#{entity.userId})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into chat_record(chat_contentcreated_timedel_taguser_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.chatContent}#{entity.createdTime}#{entity.delTag}#{entity.userId})
+        </foreach>
+        on duplicate key update
+chat_content = values(chat_content)created_time = values(created_time)del_tag = values(del_tag)user_id = values(user_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update chat_record
+        <set>
+            <if test="chatContent != null and chatContent != ''">
+                chat_content = #{chatContent},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime},
+            </if>
+            <if test="delTag != null">
+                del_tag = #{delTag},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from chat_record where id = #{id}
+    </delete>
+
+</mapper>
+
