@@ -6,10 +6,15 @@
     <title>GPT WebSocket Chat</title>
     <style>
         #response {
-            height: 80vh;
+            height: 60vh;
             overflow-y: scroll;
             border: 1px solid #ccc;
             padding: 10px;
+        }
+        .questionInput{
+            width: 90vw;
+            height: 15vh;
+            font-size: 1.3vw;
         }
     </style>
 </head>
@@ -17,13 +22,13 @@
 
 <h1>GPT WebSocket Chat</h1>
 
-<div>
-    <input type="text" id="user-input" placeholder="请输入问题...">
-    <button onclick="sendMessage()">发送</button>
-</div>
+
 
 <div id="response"></div>
-
+<div>
+    <input class="questionInput" type="text" id="user-input" placeholder="请输入问题...">
+    <button style="width: 7vw;height: 7vh" onclick="sendMessage()">发送</button>
+</div>
 <script>
     let socket;
     let lastResponse = "";
@@ -32,7 +37,7 @@
         socket = new WebSocket('ws://localhost:8888/gpt-stream'); // 根据实际情况替换或保持为localhost:8888
 
         socket.onopen = function () {
-            console.log('WebSocket 连接已建立');
+            alert('WebSocket 连接已建立');
         };
 
         socket.onmessage = function (event) {
@@ -45,10 +50,13 @@
 
         socket.onerror = function (error) {
             console.error('WebSocket 错误: ' + error);
+            setTimeout('location.reload()',3000)
+
         };
 
         socket.onclose = function () {
             console.log('WebSocket 连接已关闭');
+            setTimeout('location.reload()',3000)
         };
     }
 

@@ -1,8 +1,9 @@
 package org.example.homework_1_back.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.*;
 import org.example.homework_1_back.domain.entity.User;
-import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -29,6 +30,20 @@ public interface UserDao extends BaseMapper<User> {
      */
     long count(User user);
 
+    @Select("SELECT * FROM user WHERE user_id = #{userId}")
+    User getUserById(Integer userId);
+    @Insert("INSERT INTO user(user_name, age, address, email, phone, sex, password, nick_name) VALUES(#{userName}, #{age}, #{address}, #{email}, #{phone}, #{sex}, #{password}, #{nickName})")
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
+    Integer createUser(User user);
+
+    @Update("UPDATE user SET user_name=#{userName}, age=#{age}, address=#{address}, email=#{email}, phone=#{phone}, sex=#{sex}, password=#{password}, nick_name=#{nickName} WHERE user_id=#{userId}")
+    Integer updateUser(User user);
+
+    @Delete("DELETE FROM user WHERE user_id=#{userId}")
+    Integer deleteUser(@Param("userId") Integer userId);
+
+    @Select("SELECT * FROM user")
+    List<User> listAllUsers();
     /**
      * 新增数据
      *

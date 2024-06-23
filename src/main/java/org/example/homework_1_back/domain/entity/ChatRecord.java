@@ -34,5 +34,9 @@ public class ChatRecord implements Serializable {
      * 聊天所属用户
      */
     private Integer userId;
+
+//    聊天类别，是ai回答的还是用户提问的 一般存储的是 问题 或者 答案
+
+    private String type;
 }
 
