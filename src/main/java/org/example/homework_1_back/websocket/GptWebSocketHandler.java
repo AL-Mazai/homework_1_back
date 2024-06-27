@@ -55,18 +55,17 @@ public class GptWebSocketHandler extends TextWebSocketHandler {
         tongYi.streamOutput2(question, text -> {
             try {
                 sendMessageToClient(session, text);
-
                 // 同时保存答案到数据库
-                answerRecord.setUserId(user.getUserId()); // 与问题相同用户
+                 // 与问题相同用户
                 answerRecord.setChatContent(text);
-                answerRecord.setCreatedTime(new Date());
-                answerRecord.setDelTag(1);
-                answerRecord.setType("回答");
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+        answerRecord.setUserId(user.getUserId());
+        answerRecord.setCreatedTime(new Date());
+        answerRecord.setDelTag(1);
+        answerRecord.setType("回答");
         chatRecordDao.insertChatRecord(answerRecord);
     }
 
