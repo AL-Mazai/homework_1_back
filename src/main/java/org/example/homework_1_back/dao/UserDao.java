@@ -32,11 +32,11 @@ public interface UserDao extends BaseMapper<User> {
 
     @Select("SELECT * FROM user WHERE user_id = #{userId}")
     User getUserById(Integer userId);
-    @Insert("INSERT INTO user(user_name, age, address, email, phone, sex, password, nick_name) VALUES(#{userName}, #{age}, #{address}, #{email}, #{phone}, #{sex}, #{password}, #{nickName})")
+    @Insert("INSERT INTO user(user_name, age, address, email, phone, sex, password, nick_name) VALUES(#{userName}, #{age}, #{address}, #{email}, #{phone}, #{sex}, #{password}, #{nickName},#{type},#{money})")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     Integer createUser(User user);
 
-    @Update("UPDATE user SET user_name=#{userName}, age=#{age}, address=#{address}, email=#{email}, phone=#{phone}, sex=#{sex}, password=#{password}, nick_name=#{nickName} WHERE user_id=#{userId}")
+    @Update("UPDATE user SET user_name=#{userName}, age=#{age}, address=#{address}, email=#{email}, phone=#{phone}, sex=#{sex}, password=#{password}, nick_name=#{nickName},type=#{type}, money=#{money} WHERE user_id=#{userId}")
     Integer updateUser(User user);
 
     @Delete("DELETE FROM user WHERE user_id=#{userId}")
@@ -44,14 +44,7 @@ public interface UserDao extends BaseMapper<User> {
 
     @Select("SELECT * FROM user")
     List<User> listAllUsers();
-    @Deprecated
-    int insert(User user);
 
-    @Deprecated
-    int update(User user);
-
-    @Deprecated
-    int deleteById(Integer userId);
 
 }
 

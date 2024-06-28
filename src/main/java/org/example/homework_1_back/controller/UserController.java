@@ -38,7 +38,7 @@ public class UserController {
         }
         // 更新用户的余额
         user.setMoney(user.getMoney() + amount);
-        int updateResult = userDao.updateById(user);
+        int updateResult = userDao.updateUser(user);
         if (updateResult > 0) {
             return ResponseResult.okResult("充值成功");
         } else {
@@ -51,50 +51,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public ResponseEntity<User> queryById(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(this.userService.queryById(id));
-    }
-
-    /**
-     * 新增数据
-     *
-     * @param user 实体
-     * @return 新增结果
-     */
-    @PostMapping
-    public ResponseEntity<User> add(User user) {
-        return ResponseEntity.ok(this.userService.insert(user));
-    }
-
-    /**
-     * 编辑数据
-     *
-     * @param user 实体
-     * @return 编辑结果
-     */
-    @PutMapping
-    public ResponseEntity<User> edit(User user) {
-        return ResponseEntity.ok(this.userService.update(user));
-    }
-
-    /**
-     * 删除数据
-     *
-     * @param id 主键
-     * @return 删除是否成功
-     */
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteById(Integer id) {
-        return ResponseEntity.ok(this.userService.deleteById(id));
-    }
 
     /**
      * 注册新用户
@@ -110,27 +66,24 @@ public class UserController {
         return ResponseResult.okResult();
     }
 
-    /**
-     * 用户登录
-     * @return 登录结果
-     */
-    @PostMapping("/login")
-    public ResponseResult login(@RequestBody User user) {
-        // 校验用户名和密码
-        UserVo userVo = userService.validateUser(user.getUserName(), user.getPassword());
-        if (userVo != null) {
-            // 如果校验成功，查询用户信息并返回
-            return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS, userVo);
-        } else {
-            return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
-        }
-    }
 
-    @PostMapping("/updateUserInfo")
-    public ResponseResult updateUserInfo(@RequestBody User user){
-        userService.updateUserInfo(user);
-        return ResponseResult.okResult();
-    }
+//    @PostMapping("/login")
+//    public ResponseResult login(@RequestBody User user) {
+//        // 校验用户名和密码
+//        UserVo userVo = userService.validateUser(user.getUserName(), user.getPassword());
+//        if (userVo != null) {
+//            // 如果校验成功，查询用户信息并返回
+//            return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS, userVo);
+//        } else {
+//            return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
+//        }
+//    }
+//
+//    @PostMapping("/updateUserInfo")
+//    public ResponseResult updateUserInfo(@RequestBody User user){
+//        userService.updateUserInfo(user);
+//        return ResponseResult.okResult();
+//    }
 
 }
 

@@ -29,15 +29,6 @@ public interface ChatRecordDao {
     @Select("SELECT * FROM chat_record WHERE user_id = #{userId} AND del_tag = 1")
     List<ChatRecord> getUserChatRecords(@Param("userId") Integer userId);
 
-    @Select("SELECT * FROM chat_record WHERE del_tag=1")
-    @Deprecated
-    ChatRecord queryById(Integer id);
-    @Deprecated
-    int insert(ChatRecord chatRecord);
-    @Deprecated
-    int update(ChatRecord chatRecord);
-    @Deprecated
-    int deleteById(Integer id);
 
 }
 
