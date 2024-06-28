@@ -28,7 +28,8 @@ public interface ChatRecordDao {
     Integer deleteChatRecord(@Param("id") Integer id);
     @Select("SELECT * FROM chat_record WHERE user_id = #{userId} AND del_tag = 1")
     List<ChatRecord> getUserChatRecords(@Param("userId") Integer userId);
-
+    @Select("SELECT * FROM chat_record WHERE user_id = #{userId} AND del_tag = 1 AND session_id=#{sessionId}")
+    List<ChatRecord> getUserChatRecordsBySession(@Param("userId") Integer userId,@Param("sessionId")Integer sessionId);
 
 }
 

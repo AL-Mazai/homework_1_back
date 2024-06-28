@@ -29,6 +29,10 @@ public class ChatRecordController {
     public List<ChatRecord> getUserChatRecords(@RequestParam Integer userId) {
         return chatRecordDao.getUserChatRecords(userId);
     }
+    @GetMapping("/session")
+    public List<ChatRecord> getUserChatRecordsBySession(@RequestParam Integer userId, @RequestParam Integer sessionId) {
+        return chatRecordDao.getUserChatRecordsBySession(userId,sessionId);
+    }
 
 }
 

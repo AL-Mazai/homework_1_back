@@ -27,7 +27,7 @@ public class GPTController {
     }
 
     @PostMapping("/zhipu")
-    public ResponseResult<String> zhipu(@RequestParam String input,@RequestParam Integer userId){
+    public ResponseResult<String> zhipu(@RequestParam String input,@RequestParam Integer userId,@RequestParam Integer sessionId){
         String res = zhiPu.gpt(input);
 
         //        插入问题
