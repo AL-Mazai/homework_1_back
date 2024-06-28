@@ -67,17 +67,17 @@ public class UserController {
     }
 
 
-//    @PostMapping("/login")
-//    public ResponseResult login(@RequestBody User user) {
-//        // 校验用户名和密码
-//        UserVo userVo = userService.validateUser(user.getUserName(), user.getPassword());
-//        if (userVo != null) {
-//            // 如果校验成功，查询用户信息并返回
-//            return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS, userVo);
-//        } else {
-//            return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
-//        }
-//    }
+    @PostMapping("/login")
+    public ResponseResult login(@RequestBody User user) {
+        // 校验用户名和密码
+        User user1 = userDao.getUserById(user.getUserId());
+        if (user1 != null) {
+            // 如果校验成功，查询用户信息并返回
+            return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS, user1);
+        } else {
+            return ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_ERROR);
+        }
+    }
 //
 //    @PostMapping("/updateUserInfo")
 //    public ResponseResult updateUserInfo(@RequestBody User user){
