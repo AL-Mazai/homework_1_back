@@ -6,8 +6,12 @@ import org.example.homework_1_back.domain.entity.User;
 import org.example.homework_1_back.domain.vo.UserVo;
 import org.example.homework_1_back.enums.AppHttpCodeEnum;
 import org.example.homework_1_back.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.example.homework_1_back.dao.UserDao;
+import org.springframework.transaction.annotation.Transactional;
+
 
 
 /**
@@ -19,6 +23,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("user")
 public class UserController {
+    final
+    UserDao userDao;
+
+    public UserController(@Autowired UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @PostMapping("/recharge")
+    public ResponseResult recharge(@RequestParam Integer userId, @RequestParam Integer amount) {
+        User user = userDao.getUserById(userId);
+        if (user == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.USERNAME_NOT_NULL, "用户不存在");
+        }
+        // 更新用户的余额
+        user.setMoney(user.getMoney() + amount);
+        int updateResult = userDao.updateById(user);
+        if (updateResult > 0) {
+            return ResponseResult.okResult("充值成功");
+        } else {
+            return ResponseResult.errorResult(AppHttpCodeEnum.SYSTEM_ERROR, "充值失败");
+        }
+    }
     /**
      * 服务对象
      */

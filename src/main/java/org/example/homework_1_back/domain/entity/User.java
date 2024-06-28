@@ -31,5 +31,7 @@ public class User implements Serializable {
     private String password;
 
     private String nickName;
+    private String type;
+    private Integer money;
 }
 
