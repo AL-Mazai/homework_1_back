@@ -26,7 +26,7 @@ public class ChatRecordController {
         this.chatRecordDao = chatRecordDao;
     }
     @GetMapping
-    public List<ChatRecord> getUserChatRecords(@RequestParam Integer userId) {
+    public List<ChatRecord> getUserChatRecords(@RequestParam("userId") Integer userId) {
         return chatRecordDao.getUserChatRecords(userId);
     }
     @GetMapping("/session")

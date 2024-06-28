@@ -27,7 +27,7 @@ public class GPTController {
     }
 
     @PostMapping("/zhipu")
-    public ResponseResult<String> zhipu(@RequestParam String input,@RequestParam Integer userId,@RequestParam Integer sessionId){
+    public ResponseResult<String> zhipu(@RequestParam("message") String input,@RequestParam("userId") Integer userId){
         String res = zhiPu.gpt(input);
 
         //        插入问题
@@ -51,7 +51,7 @@ public class GPTController {
         return ResponseResult.okResult(res);
     }
     @PostMapping("/tongyi")
-    public ResponseResult<String> tongyi(@RequestParam String input,@RequestParam Integer userId){
+    public ResponseResult<String> tongyi(@RequestParam("message") String input,@RequestParam("userId") Integer userId){
         String res = tongYi.gpt(input);
 
         //        插入问题
